@@ -1,3 +1,4 @@
+
 var merch = JSON.parse(data).data.products;
 
 var vm = new Vue({
@@ -52,7 +53,7 @@ var vm = new Vue({
       this.modalVisible = true
     },
     dec: function (id) {
-      var item = this.cart.findById(id);
+      var item = this.findInCartById(id);
       if (item.count > 1) {
         item.count -= 1
       }
@@ -64,7 +65,7 @@ var vm = new Vue({
       return this.items.filter(function(item) { return item.id == id })[0]
     },
     addToCart: function(item) {
-      var cartItem = this.cart.findById(item.id)
+      var cartItem = this.findInCartById(item.id)
 
       if (cartItem) {
         cartItem.count += 1
@@ -80,9 +81,14 @@ var vm = new Vue({
       }
     },
     clearCart: function() {
-      while (this.cart.length > 0) {
-        this.cart.pop()
+      if (confirm("Are you sure to remove all the items from your cart?")) {
+        while (this.cart.length > 0) {
+          this.cart.pop()
+        }
       }
+    },
+    findInCartById: function(id) {
+      return this.cart.filter(function(item) { return item.id == id })[0]
     },
     removeById: function(id) {
       this.cart.forEach((el, i) => {
@@ -91,12 +97,19 @@ var vm = new Vue({
         }
       })
     },
+    findItemCount: function(id) {
+      return this.findInCartById(id).count
+    },
+    isAdded: function(id) {
+      var item = this.findInCartById(id);
+      if (item) {
+        return true
+      }
+    },
     restoreScroll: function() {
       document.documentElement.scrollTop = this.lastScroll
     }
   }
 });
 
-vm.cart.findById = function(id) {
-  return this.filter(function(item) { return item.id == id })[0]
-};
+

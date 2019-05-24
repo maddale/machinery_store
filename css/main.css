@@ -11,6 +11,7 @@
 
 .price {
   height: 100%;
+  position: relative;
 }
 
 .show-price span {
@@ -73,6 +74,16 @@ td.image {
     max-width: 50px;
     display: inline;
     text-align: center;
+    margin: 0 10px;
+}
+
+.subtotlal {
+  width: 130px;
+}
+
+.disabled {
+  color: #a4a7ab;
+  cursor: default;
 }
 
 .counter i {
@@ -116,4 +127,20 @@ td.image {
 
 hr {
   margin: 0;
+}
+
+.itemcounter {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.itemcounter .lable {
+  font-size: 12px;
+}
+
+.badge-pill {
+    padding-right: .5em;
+    padding-left: .5em;
 }

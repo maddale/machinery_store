@@ -51,7 +51,7 @@
             </div>
             <div class="modal-body">
               <div v-if="cart.length == 0">
-                <h3 class="text-center pt-4 pb-4">You didn't pick any items yet...</h3>
+                <h3 class="text-center pt-4 pb-4">Here is no any items yet...</h3>
               </div>
               <table class=order v-if="cart.length != 0">
                 <tr v-for="item in cart">
@@ -59,11 +59,13 @@
                   <td>{{ item.name }}</td>
                   <td>{{ item.price }} <i class="fa fa-eur" aria-hidden="true"></td>
                   <td class="counter">
-                      <a @click="dec(item.id)"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>
+                    <div class="d-flex align-items-center">
+                      <a @click="dec(item.id)"><i class="fa fa-minus-circle" :class="{ disabled: item.count == 1 }" aria-hidden="true"></i></a>
                       <input class="form-control" type="text" readonly v-model="item.count">
                       <a @click="item.count += 1"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                    </div>
                   </td>
-                  <td>{{ item.count * item.price }} <i class="fa fa-eur" aria-hidden="true"></i></td>
+                  <td class="subtotlal">{{ item.count * item.price }} <i class="fa fa-eur" aria-hidden="true"></i></td>
                   <td><i class="fa fa-trash" aria-hidden="true" title="Remove item from the cart" @click='removeById(item.id)'></i></td>
                   <tr>
                     <td colspan=6>
@@ -185,6 +187,7 @@
 
             <div class="col">
               <div class="price d-flex flex-column justify-content-center align-items-center">
+                <span class="itemcounter" v-if="isAdded(item.id)"><span class="badge badge-pill badge-success">{{ findItemCount(item.id) }}</span> <span class="lable">In your cart</span></span>
                 <p class="show-price"><span>{{item.price}}</span> <i :class="'fa fa-' + item.currency.toLowerCase()" aria-hidden="true"></i></p>
                 <button type="button" class="btn btn-success" @click="addToCart(item)"> <i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
               </div>
