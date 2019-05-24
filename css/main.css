@@ -99,3 +99,7 @@ td.image {
 .shown {
   display: block;
 }
+
+.list-group-item {
+  cursor: pointer;
+}
