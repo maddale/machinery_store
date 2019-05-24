@@ -103,3 +103,17 @@ td.image {
 .list-group-item {
   cursor: pointer;
 }
+
+.header {
+  position: sticky;
+  background-color: white;
+  padding: 10px;
+}
+
+.sticky-top {
+  top: 100px;
+}
+
+hr {
+  margin: 0;
+}

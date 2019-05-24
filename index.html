@@ -13,25 +13,29 @@
 
 </head>
 <body>
+<div id="vm">
 
 <!-- Header -->
 
-  <div class="container" id="vm">
-    <div class="row">
-      <div class="col">
-        <h1>Machinery store</h1>
-      </div>
-      <div class="col text-right">
-        <div class="cart">
-          <i class="fa fa-shopping-cart" aria-hidden="true" @click="openCart"></i>
-          <div class="badge badge-danger text-wrap">{{ cartCounter }}</div>
+<div class="fixed-top header">
+    <div class="container header">
+      <div class="row">
+        <div class="col">
+          <h1>Machinery store</h1>
+        </div>
+        <div class="col text-right">
+          <div class="cart">
+            <i class="fa fa-shopping-cart" aria-hidden="true" @click="openCart"></i>
+            <div class="badge badge-danger text-wrap">{{ cartCounter }}</div>
+          </div>
         </div>
       </div>
+      <hr>
     </div>
-  <hr class="mt-0">
+</div>
 
+<div class="container">
 <!-- Modal section -->
-
     <div class="modal-group" :class="{ shown : modalVisible }" v-if="modalVisible">
       <div class="modal fade show" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -122,7 +126,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-success"> <i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+              <button type="button" class="btn btn-success" @click="addToCart(currentItem)"> <i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
             </div>
           </div>
 <!-- /Content for item modal -->
@@ -131,34 +135,38 @@
       </div>
       <div class="modal-backdrop fade show"></div>
     </div>
+
 <!-- /Modal section -->
 
-
-
     <div class="row">
+
 <!-- Left-sidev bar -->
 
-      <div class="col-3">
-        <h4>Categories</h4>
-        <ul class="list-group">
-          <li class="list-group-item"
-              @click="filter = false"
-              :class="{ active : !filter }">
-            All categories
-          </li>
+      <div class="col-3 sidebar">
+        <div class="sticky-top">
+          <h4>Categories</h4>
+          <ul class="list-group">
+            <li class="list-group-item"
+                @click="filter = false"
+                :class="{ active : !filter }">
+              All categories
+            </li>
 
-          <li v-for="single_ctg in getUniqCats"
-              @click="filter = single_ctg"
-              class="list-group-item"
-              :class="{ active : filter == single_ctg }">
-              {{ single_ctg }}
-          </li>
-        </ul>
+            <li v-for="single_ctg in getUniqCats"
+                @click="filter = single_ctg"
+                class="list-group-item"
+                :class="{ active : filter == single_ctg }">
+                {{ single_ctg }}
+            </li>
+          </ul>
+        </div>
       </div>
 
 <!-- Main content  -->
 
       <div class="col">
+        <h4>&nbsp;</h4>
+
         <div class="item" v-for="item in getFilteredItems">
           <div class="row">
             <div class="col">
@@ -187,5 +195,7 @@
     </div>
   </div>
   <script type="text/javascript" src="js/main.js"></script>
+</div>
+
 </body>
 </html>

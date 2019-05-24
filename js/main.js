@@ -9,8 +9,8 @@ var vm = new Vue({
     currentItem: "",
     order: {},
     cart: [],
-    modalMode: ""
-
+    modalMode: "",
+    lastScroll: 0
   },
   computed: {
     getUniqCats: function() {
@@ -35,9 +35,14 @@ var vm = new Vue({
       return this.cart.reduce(function(sum, cur) { return sum + (cur.count * cur.price) }, 0)
     }
   },
-
+  watch: {
+    modalVisible: function() {
+        this.restoreScroll()
+    }
+  },
   methods: {
     openItem: function(item) {
+      this.lastScroll = document.documentElement.scrollTop;
       this.modalMode    = "item";
       this.currentItem  = item;
       this.modalVisible = true
@@ -58,7 +63,6 @@ var vm = new Vue({
     getItemById: function(id) {
       return this.items.filter(function(item) { return item.id == id })[0]
     },
-
     addToCart: function(item) {
       var cartItem = this.cart.findById(item.id)
 
@@ -71,24 +75,24 @@ var vm = new Vue({
           name: item.name,
           price: item.price,
           count: 1,
-        // subTotal: item.price * count
         };
         this.cart.push(cartItem)
       }
     },
-
     clearCart: function() {
       while (this.cart.length > 0) {
         this.cart.pop()
       }
     },
-
     removeById: function(id) {
       this.cart.forEach((el, i) => {
         if (el.id == id) {
           this.cart.splice(i, 1)
         }
       })
+    },
+    restoreScroll: function() {
+      document.documentElement.scrollTop = this.lastScroll
     }
   }
 });
