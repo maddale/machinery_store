@@ -11,7 +11,6 @@ var vm = new Vue({
     order: {},
     cart: [],
     modalMode: "",
-    lastScroll: 0
   },
   computed: {
     getUniqCats: function() {
@@ -36,14 +35,8 @@ var vm = new Vue({
       return this.cart.reduce(function(sum, cur) { return sum + (cur.count * cur.price) }, 0)
     }
   },
-  watch: {
-    modalVisible: function() {
-        this.restoreScroll()
-    }
-  },
   methods: {
     openItem: function(item) {
-      this.lastScroll = document.documentElement.scrollTop;
       this.modalMode    = "item";
       this.currentItem  = item;
       this.modalVisible = true
@@ -106,9 +99,6 @@ var vm = new Vue({
         return true
       }
     },
-    restoreScroll: function() {
-      document.documentElement.scrollTop = this.lastScroll
-    }
   }
 });
 

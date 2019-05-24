@@ -1,0 +1,19 @@
+.cats {
+  padding-left: 0px;
+}
+
+.cats li {
+  list-style: none;
+}
+
+.modal-group {
+  display: none;
+}
+
+.shown {
+  display: block;
+}
+
+.list-group-item {
+  cursor: pointer;
+}

@@ -1,0 +1,39 @@
+.item {
+  border: solid 1px darkgray;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.thumb img {
+  max-height: 150px;
+}
+
+.price {
+  height: 100%;
+  position: relative;
+}
+
+.show-price span {
+  font-size: 30px;
+}
+
+.show-price i {
+  font-size: 26px;
+}
+
+.itemcounter {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.itemcounter .lable {
+  font-size: 12px;
+}
+
+.badge-pill {
+    padding-right: .5em;
+    padding-left: .5em;
+}

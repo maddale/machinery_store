@@ -1,26 +1,7 @@
-.item {
-  border: solid 1px darkgray;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.thumb img {
-  max-height: 150px;
-}
-
-.price {
-  height: 100%;
-  position: relative;
-}
-
-.show-price span {
-  font-size: 30px;
-}
-
-.show-price i {
-  font-size: 26px;
-}
+@import "items.css";
+@import "sidebar.css";
+@import "item_modal.css";
+@import "cart.css";
 
 .modal {
   display: block;
@@ -28,19 +9,6 @@
 
 .modal-dialog {
   max-width: 1000px;
-}
-
-.full_img {
-  width: 100%;
-}
-
-.specs {
-  font-size: 20px;
-}
-
-.key {
-  min-width: 230px;
-  font-weight: 700;
 }
 
 .fa-shopping-cart {
@@ -54,65 +22,11 @@
   padding: 10px 10px 0;
 }
 
-.order {
-  width: 100%;
-}
-
-.order i {
-  cursor: pointer;
-}
-
-.order img {
-  max-width: 80%;
-}
-
-td.image {
-  width: 150px;
-}
-
 .counter input {
     max-width: 50px;
     display: inline;
     text-align: center;
     margin: 0 10px;
-}
-
-.subtotlal {
-  width: 130px;
-}
-
-.disabled {
-  color: #a4a7ab;
-  cursor: default;
-}
-
-.counter i {
-  font-size: 26px;
-}
-
-.fa-trash {
-  color: #a50303;
-  font-size: 26px;
-}
-
-.cats {
-  padding-left: 0px;
-}
-
-.cats li {
-  list-style: none;
-}
-
-.modal-group {
-  display: none;
-}
-
-.shown {
-  display: block;
-}
-
-.list-group-item {
-  cursor: pointer;
 }
 
 .header {
@@ -129,18 +43,3 @@ hr {
   margin: 0;
 }
 
-.itemcounter {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  text-align: center;
-}
-
-.itemcounter .lable {
-  font-size: 12px;
-}
-
-.badge-pill {
-    padding-right: .5em;
-    padding-left: .5em;
-}

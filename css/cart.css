@@ -1,0 +1,21 @@
+.subtotlal {
+  width: 130px;
+}
+
+.disabled {
+  color: #a4a7ab;
+  cursor: default;
+}
+
+.counter i {
+  font-size: 26px;
+}
+
+.fa-trash {
+  color: #a50303;
+  font-size: 26px;
+}
+
+td.image {
+  width: 150px;
+}

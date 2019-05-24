@@ -1,204 +1,199 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Machinery Store</title>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <script type="text/javascript" src="js/items.js"></script>
+  <head>
+    <title>Machinery Store</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script type="text/javascript" src="js/items.js"></script>
 
-  <link rel="stylesheet" href="css/font-awesome.min.css">
-  <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body>
+    <div id="vm">
 
-</head>
-<body>
-<div id="vm">
+  <!-- Header -->
 
-<!-- Header -->
-
-<div class="fixed-top header">
-    <div class="container header">
-      <div class="row">
-        <div class="col">
-          <h1>Machinery store</h1>
-        </div>
-        <div class="col text-right">
-          <div class="cart">
-            <i class="fa fa-shopping-cart" aria-hidden="true" @click="openCart"></i>
-            <div class="badge badge-danger text-wrap">{{ cartCounter }}</div>
-          </div>
-        </div>
-      </div>
-      <hr>
-    </div>
-</div>
-
-<div class="container">
-<!-- Modal section -->
-    <div class="modal-group" :class="{ shown : modalVisible }" v-if="modalVisible">
-      <div class="modal fade show" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-
-<!-- Content for Order modal -->
-
-          <div class="modal-content" v-if="modalMode == 'order'">
-            <div class="modal-header">
-              <h3 class="modal-title">Your cart</h3>
-              <button type="button" class="close" @click="modalVisible = false">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div v-if="cart.length == 0">
-                <h3 class="text-center pt-4 pb-4">Here is no any items yet...</h3>
+      <div class="fixed-top header">
+          <div class="container header">
+            <div class="row">
+              <div class="col">
+                <h1>Machinery store</h1>
               </div>
-              <table class=order v-if="cart.length != 0">
-                <tr v-for="item in cart">
-                  <td class="image"><img :src="item.image" :alt="item.name" :title="item.name"></td>
-                  <td>{{ item.name }}</td>
-                  <td>{{ item.price }} <i class="fa fa-eur" aria-hidden="true"></td>
-                  <td class="counter">
-                    <div class="d-flex align-items-center">
-                      <a @click="dec(item.id)"><i class="fa fa-minus-circle" :class="{ disabled: item.count == 1 }" aria-hidden="true"></i></a>
-                      <input class="form-control" type="text" readonly v-model="item.count">
-                      <a @click="item.count += 1"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+              <div class="col text-right">
+                <div class="cart">
+                  <i class="fa fa-shopping-cart" aria-hidden="true" @click="openCart"></i>
+                  <div class="badge badge-danger text-wrap">{{ cartCounter }}</div>
+                </div>
+              </div>
+            </div>
+            <hr>
+          </div>
+      </div>
+
+      <div class="container">
+  <!-- Modal section -->
+          <div class="modal-group" :class="{ shown : modalVisible }" v-if="modalVisible">
+            <div class="modal fade show" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+
+  <!-- Content for Cart modal -->
+
+                <div class="modal-content" v-if="modalMode == 'order'">
+                  <div class="modal-header">
+                    <h3 class="modal-title">Your cart</h3>
+                    <button type="button" class="close" @click="modalVisible = false">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div v-if="cart.length == 0">
+                      <h3 class="text-center pt-4 pb-4">The cart is empty</h3>
                     </div>
-                  </td>
-                  <td class="subtotlal">{{ item.count * item.price }} <i class="fa fa-eur" aria-hidden="true"></i></td>
-                  <td><i class="fa fa-trash" aria-hidden="true" title="Remove item from the cart" @click='removeById(item.id)'></i></td>
-                  <tr>
-                    <td colspan=6>
-                      <p class='border-top text-right mt-3 pt-4'>
-                        <span class='h3'><strong>Total: {{ totalPrice }} <i class="fa fa-eur" aria-hidden="true"></i></strong></span>
-                        <button class='btn btn-success ml-3'>Checkout</button><button class='btn btn-secondary ml-3' @click="clearCart()">Clear cart</button>
-                      </p>
-                    </td>
-                  </tr>
-                </tr>
-              </table>
-            </div>
-          </div>
-<!-- /Content for Order modal -->
-
-
-<!-- Content for item modal -->
-
-          <div class="modal-content" v-if="modalMode == 'item'">
-            <div class="modal-header">
-              <h3 class="modal-title">{{ currentItem.built_on + " " + currentItem.name }}</h3>
-              <button type="button" class="close" @click="modalVisible = false">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-
-              <div class="row">
-                <div class="col-5">
-                  <img :src="currentItem.thumbnail.thumbnail_url" :alt="currentItem.thumbnail.alt" class="full_img">
+                    <table class=order v-if="cart.length != 0">
+                      <tr v-for="item in cart">
+                        <td class="image"><img :src="item.image" :alt="item.name" :title="item.name"></td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.price }} <i class="fa fa-eur" aria-hidden="true"></td>
+                        <td class="counter">
+                          <div class="d-flex align-items-center">
+                            <a @click="dec(item.id)"><i class="fa fa-minus-circle" :class="{ disabled: item.count == 1 }" aria-hidden="true"></i></a>
+                            <input class="form-control" type="text" readonly v-model="item.count">
+                            <a @click="item.count += 1"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                          </div>
+                        </td>
+                        <td class="subtotlal">{{ item.count * item.price }} <i class="fa fa-eur" aria-hidden="true"></i></td>
+                        <td><i class="fa fa-trash" aria-hidden="true" title="Remove item from the cart" @click='removeById(item.id)'></i></td>
+                        <tr>
+                          <td colspan=6>
+                            <p class='border-top text-right mt-3 pt-4'>
+                              <span class='h3'><strong>Total: {{ totalPrice }} <i class="fa fa-eur" aria-hidden="true"></i></strong></span>
+                              <button class='btn btn-success ml-3'>Checkout</button><button class='btn btn-secondary ml-3' @click="clearCart()">Clear cart</button>
+                            </p>
+                          </td>
+                        </tr>
+                      </tr>
+                    </table>
+                  </div>
                 </div>
-                <div class="col">
-                  <table class="specs">
-                    <tr>
-                      <td class="key">Country</td><td class="value">{{ currentItem.country.name }}</td>
-                    </tr>
-                    <tr>
-                      <td class="key">Machine type</td><td class="value">{{ getNames(currentItem.machine_types) }}</td>
-                    </tr>
-                    <tr>
-                      <td class="key">Controll unit brand</td><td class="value">{{ currentItem.control_unit_brand }}</td>
-                    </tr>
-                    <tr>
-                      <td class="key">Manufacturer</td><td class="value">{{ currentItem.brand.name }}</td>
-                    </tr>
-                    <tr>
-                      <td class="key">Model</td><td class="value">{{ currentItem.model }}</td>
-                    </tr>
-                    <tr>
-                      <td class="key">Year of manufacturing</td><td class="value">{{ currentItem.country.name }}</td>
-                    </tr>
-                    <tr>
-                      <td class="key">Stock number</td><td class="value">{{ currentItem.sku }}</td>
-                    </tr>
-                    <tr>
-                      <td class="key">Application</td><td class="value">{{ getNames(currentItem.application_types) }}</td>
-                    </tr>
-                  </table>
+  <!-- /Content for Cart -->
+
+
+  <!-- Content for item modal -->
+                <div class="modal-content" v-if="modalMode == 'item'">
+                  <div class="modal-header">
+                    <h3 class="modal-title">{{ currentItem.built_on + " " + currentItem.name }}</h3>
+                    <button type="button" class="close" @click="modalVisible = false">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+
+                    <div class="row">
+                      <div class="col-5">
+                        <img :src="currentItem.thumbnail.thumbnail_url" :alt="currentItem.thumbnail.alt" class="full_img">
+                      </div>
+                      <div class="col">
+                        <table class="specs">
+                          <tr>
+                            <td class="key">Country</td><td class="value">{{ currentItem.country.name }}</td>
+                          </tr>
+                          <tr>
+                            <td class="key">Machine type</td><td class="value">{{ getNames(currentItem.machine_types) }}</td>
+                          </tr>
+                          <tr>
+                            <td class="key">Controll unit brand</td><td class="value">{{ currentItem.control_unit_brand }}</td>
+                          </tr>
+                          <tr>
+                            <td class="key">Manufacturer</td><td class="value">{{ currentItem.brand.name }}</td>
+                          </tr>
+                          <tr>
+                            <td class="key">Model</td><td class="value">{{ currentItem.model }}</td>
+                          </tr>
+                          <tr>
+                            <td class="key">Year of manufacturing</td><td class="value">{{ currentItem.country.name }}</td>
+                          </tr>
+                          <tr>
+                            <td class="key">Stock number</td><td class="value">{{ currentItem.sku }}</td>
+                          </tr>
+                          <tr>
+                            <td class="key">Application</td><td class="value">{{ getNames(currentItem.application_types) }}</td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-success" @click="addToCart(currentItem)"> <i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                  </div>
                 </div>
+  <!-- /Content for item modal -->
+
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-success" @click="addToCart(currentItem)"> <i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
-            </div>
+            <div class="modal-backdrop fade show"></div>
           </div>
-<!-- /Content for item modal -->
+  <!-- /Modal section -->
 
-        </div>
-      </div>
-      <div class="modal-backdrop fade show"></div>
-    </div>
-
-<!-- /Modal section -->
-
-    <div class="row">
-
-<!-- Left-sidev bar -->
-
-      <div class="col-3 sidebar">
-        <div class="sticky-top">
-          <h4>Categories</h4>
-          <ul class="list-group">
-            <li class="list-group-item"
-                @click="filter = false"
-                :class="{ active : !filter }">
-              All categories
-            </li>
-
-            <li v-for="single_ctg in getUniqCats"
-                @click="filter = single_ctg"
-                class="list-group-item"
-                :class="{ active : filter == single_ctg }">
-                {{ single_ctg }}
-            </li>
-          </ul>
-        </div>
-      </div>
-
-<!-- Main content  -->
-
-      <div class="col">
-        <h4>&nbsp;</h4>
-
-        <div class="item" v-for="item in getFilteredItems">
           <div class="row">
-            <div class="col">
-              <div class="thumb">
-                <img :src="item.thumbnail.thumbnail_url" :alt="item.thumbnail.alt" class="itemthumb">
+
+  <!-- Left-sidev bar -->
+
+            <div class="col-3 sidebar">
+              <div class="sticky-top">
+                <h4>Categories</h4>
+                <ul class="list-group">
+                  <li class="list-group-item"
+                      @click="filter = false"
+                      :class="{ active : !filter }">
+                    All categories
+                  </li>
+
+                  <li v-for="single_ctg in getUniqCats"
+                      @click="filter = single_ctg"
+                      class="list-group-item"
+                      :class="{ active : filter == single_ctg }">
+                      {{ single_ctg }}
+                  </li>
+                </ul>
               </div>
             </div>
-
-            <div class="col-6">
-              <div class="item-text">
-                <h2>{{ item.built_on + " " + item.name }}</h2>
-                <p>Categories: <a href="#" v-for="(ctg, i) in item.machine_categories" @click="filter = ctg.name"> {{ ctg.name }}<span v-if="item.machine_categories.length != i+1">, </span></a></p>
-                <a href="#" @click="openItem(item)"><i class="fa fa-info-circle" aria-hidden="true"></i> Get more info</a>
-              </div>
-            </div>
+  <!-- Main content  -->
 
             <div class="col">
-              <div class="price d-flex flex-column justify-content-center align-items-center">
-                <span class="itemcounter" v-if="isAdded(item.id)"><span class="badge badge-pill badge-success">{{ findItemCount(item.id) }}</span> <span class="lable">In your cart</span></span>
-                <p class="show-price"><span>{{item.price}}</span> <i :class="'fa fa-' + item.currency.toLowerCase()" aria-hidden="true"></i></p>
-                <button type="button" class="btn btn-success" @click="addToCart(item)"> <i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+              <h4>&nbsp;</h4>
+
+              <div class="item" v-for="item in getFilteredItems">
+                <div class="row">
+                  <div class="col">
+                    <div class="thumb">
+                      <img :src="item.thumbnail.thumbnail_url" :alt="item.thumbnail.alt" class="itemthumb">
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <div class="item-text">
+                      <h2>{{ item.built_on + " " + item.name }}</h2>
+                      <p>Categories: <a href="#" v-for="(ctg, i) in item.machine_categories" @click="filter = ctg.name"> {{ ctg.name }}<span v-if="item.machine_categories.length != i+1">, </span></a></p>
+                      <a href="#" @click.prevent="openItem(item)"><i class="fa fa-info-circle" aria-hidden="true"></i> Get more info</a>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="price d-flex flex-column justify-content-center align-items-center">
+                      <span class="itemcounter" v-if="isAdded(item.id)"><span class="badge badge-pill badge-success">{{ findItemCount(item.id) }}</span> <span class="lable">In your cart</span></span>
+                      <p class="show-price"><span>{{item.price}}</span> <i :class="'fa fa-' + item.currency.toLowerCase()" aria-hidden="true"></i></p>
+                      <button type="button" class="btn btn-success" @click="addToCart(item)"> <i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      <script type="text/javascript" src="js/main.js"></script>
     </div>
-  </div>
-  <script type="text/javascript" src="js/main.js"></script>
-</div>
-
-</body>
+  </body>
 </html>

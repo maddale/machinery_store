@@ -1,0 +1,25 @@
+.full_img {
+  width: 100%;
+}
+
+.specs {
+  font-size: 20px;
+}
+
+.key {
+  min-width: 230px;
+  font-weight: 700;
+}
+
+.order {
+  width: 100%;
+}
+
+.order i {
+  cursor: pointer;
+}
+
+.order img {
+  max-width: 80%;
+}
+
