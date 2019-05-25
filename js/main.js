@@ -1,10 +1,7 @@
-
-var merch = JSON.parse(data).data.products;
-
 var vm = new Vue({
   el: "#vm",
   data: {
-    items: merch,
+    items: [],
     filter: false,
     modalVisible: false,
     currentItem: "",
@@ -34,6 +31,14 @@ var vm = new Vue({
     totalPrice: function() {
       return this.cart.reduce(function(sum, cur) { return sum + (cur.count * cur.price) }, 0)
     }
+  },
+
+  created: function() {
+      this.$http.get("js/items.json").then(response => {
+        this.items = response.body.data.products;
+      }), error => {
+        alert("error");
+      }
   },
   methods: {
     openItem: function(item) {
